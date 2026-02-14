@@ -1,16 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 
- const ServiceCard = ({ service }) => {
+const ServiceCard = ({ service }) => {
   const { _id, name, price, image, description } = service;
 
   return (
     <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden">
-      
+
       <div className="relative w-full h-52">
         <Image
-        width={300}
-        height={180}
+          width={300}
+          height={180}
           src={image}
           alt={name}
           className="object-cover"
@@ -32,7 +32,7 @@ import Link from "next/link";
           </span>
 
           <Link
-            href={`/service/${_id}`}
+            href={`/services/${_id?.toString() || ""}`}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition"
           >
             View Details
