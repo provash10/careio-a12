@@ -77,6 +77,7 @@ const Navbar = () => {
         <Link href="/my-bookings" className="btn">My Bookings</Link>
         <Link href="/reviews" className="btn">Reviews</Link>
         <Link href="/dashboard" className="btn">Dashboard</Link>
+        <Link href="/addservice" className="btn">Add Service</Link>
         <Link href="/auth/login" className="btn">Login</Link>
         <Link href="/auth/register" className="btn">Register</Link>
       </div>
