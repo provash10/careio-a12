@@ -1,13 +1,21 @@
-import { services } from "../route";
+import { connect } from "@/app/lib/dbConnect";
+// import { services } from "../route";
+const servicesCollection = connect("services");
 
 export async function GET(request) {
-    return Response.json(services)
+
+    // const servicesCollection = connect("services");
+    const result =await servicesCollection.find().toArray();
+
+    // return Response.json(services)
+    return Response.json(result);
 }
 
 
 export async function POST(request) {
 
     const {message} = await request.json();
+    
     if(!message ||typeof message !== "string"){
         return Response.json({
         status:400,
@@ -15,11 +23,10 @@ export async function POST(request) {
     })
     }
 
-    const newServices = {message, id:services.length +1};
-    services.push(newServices);
+    // const newServices = {message, id:services.length +1};
+    const newServices = {message, date:new Date().toISOString()};
+    // services.push(newServices); no need
+    const result = await servicesCollection.insertOne(newServices);
 
-    return Response.json({
-        acknowledged:true,
-        insertedId: newServices.id
-    })
+    return Response.json(result);
 }
