@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "serviceName": "Baby Sitting Basic Care",
+    "category": "baby",
+    "pricePerHour": 500,
+    "image": "/image/services/baby1.jpg",
+    "description": "Professional babysitting service for infants and toddlers. Includes feeding, playing, and basic hygiene care."
+  },
+  {
+    "id": 2,
+    "serviceName": "Full Day Child Care",
+    "category": "baby",
+    "pricePerHour": 450,
+    "image": "/image/services/baby2.jpg",
+    "description": "Full day supervision and care for children with educational and recreational activities."
+  },
+  {
+    "id": 3,
+    "serviceName": "Newborn Special Care",
+    "category": "baby",
+    "pricePerHour": 700,
+    "image": "/image/services/baby3.jpg",
+    "description": "Specialized newborn care including feeding support, sleep monitoring, and hygiene management."
+  },
+  {
+    "id": 4,
+    "serviceName": "Elderly Home Assistance",
+    "category": "elderly",
+    "pricePerHour": 600,
+    "image": "/image/services/elder1.jpg",
+    "description": "Daily support for elderly individuals including mobility assistance and companionship."
+  },
+  {
+    "id": 5,
+    "serviceName": "Senior Personal Care",
+    "category": "elderly",
+    "pricePerHour": 650,
+    "image": "/image/services/elder2.jpg",
+    "description": "Personal hygiene, grooming, and medication reminders for senior citizens."
+  },
+  {
+    "id": 6,
+    "serviceName": "24/7 Elderly Support",
+    "category": "elderly",
+    "pricePerHour": 800,
+    "image": "/image/services/elder3.jpg",
+    "description": "Round-the-clock elderly supervision and assistance for critical care needs."
+  },
+  {
+    "id": 7,
+    "serviceName": "Sick Patient Home Care",
+    "category": "sick",
+    "pricePerHour": 750,
+    "image": "/image/services/sick1.jpg",
+    "description": "Professional home care service for recovering patients including monitoring and assistance."
+  },
+  {
+    "id": 8,
+    "serviceName": "Post-Surgery Care",
+    "category": "sick",
+    "pricePerHour": 850,
+    "image": "/image/services/sick2.jpg",
+    "description": "Special post-surgery care support including medication management and physical assistance."
+  },
+  {
+    "id": 9,
+    "serviceName": "Physiotherapy Support Care",
+    "category": "sick",
+    "pricePerHour": 900,
+    "image": "/image/services/sick3.jpg",
+    "description": "Home-based physiotherapy support and recovery assistance guided by professionals."
+  },
+  {
+    "id": 10,
+    "serviceName": "Special Needs Care Service",
+    "category": "special",
+    "pricePerHour": 950,
+    "image": "/image/services/special1.jpg",
+    "description": "Dedicated care services for individuals with special needs ensuring comfort and safety."
+  }
+]
