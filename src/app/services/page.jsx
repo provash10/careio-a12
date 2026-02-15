@@ -21,14 +21,28 @@ const Services = async () => {
     console.log(serializedServices);
 
     return (
-        <div>
-            <h1 className='text-4xl text-center underline font-bold'>Service Page : {services.length}</h1>
-            <div className='grid grid-cols-4 gap-4 w-[90%] mx-auto m-10'>
-                {
-                    serializedServices.map(service => <ServiceCard key={service._id} service={service}></ServiceCard>)
-                }
-            </div>
+        <div className="min-h-screen bg-gray-50/50 py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto">
+                <div className="text-center mb-16 space-y-4">
+                    <h1 className='text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tight'>
+                        Our Premium <span className="text-blue-600">Care</span> Services
+                    </h1>
+                    <p className="text-gray-500 max-w-2xl mx-auto text-lg">
+                        Expert care solutions tailored to your needs. Currently showing {services.length} active services.
+                    </p>
+                    <div className="w-24 h-1.5 bg-blue-600 mx-auto rounded-full"></div>
+                </div>
 
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8'>
+                    {
+                        serializedServices.map(service => (
+                            <div key={service._id} className="h-full transform hover:-translate-y-2 transition-transform duration-300">
+                                <ServiceCard service={service}></ServiceCard>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
         </div>
     );
 };

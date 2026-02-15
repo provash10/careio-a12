@@ -29,28 +29,50 @@ export async function GET(request) {
 // }
 
 export async function POST(request) {
-  const body = await request.json();
+  try {
+    const body = await request.json();
+    const {
+      name,
+      shortDescription,
+      description,
+      pricePerHour,
+      pricePerDay,
+      image,
+      rating,
+      gallery,
+      features,
+      availability,
+      faq
+    } = body;
 
-  const { name, price, image, description } = body;
+    if (!name || !pricePerHour || !image || !description) {
+      return Response.json(
+        { message: "Basic fields (name, pricePerHour, image, description) are required" },
+        { status: 400 }
+      );
+    }
 
-  if (!name || !price || !image || !description) {
-    return Response.json(
-      { message: "All fields are required" },
-      { status: 400 }
-    );
+    const newService = {
+      name,
+      shortDescription,
+      description,
+      pricePerHour: Number(pricePerHour),
+      pricePerDay: Number(pricePerDay),
+      image,
+      rating: Number(rating),
+      gallery: Array.isArray(gallery) ? gallery : [],
+      features: Array.isArray(features) ? features : [],
+      availability: availability || "Available",
+      faq: Array.isArray(faq) ? faq : [],
+      createdAt: new Date(),
+    };
+
+    const servicesCollection = await connect("services");
+    const result = await servicesCollection.insertOne(newService);
+
+    return Response.json(result);
+  } catch (error) {
+    return Response.json({ message: "Internal Server Error" }, { status: 500 });
   }
-
-  const newService = {
-    name,
-    price: Number(price),
-    image,
-    description,
-    createdAt: new Date(),
-  };
-
-  const servicesCollection = await connect("services");
-  const result = await servicesCollection.insertOne(newService);
-
-  return Response.json(result);
 }
 
