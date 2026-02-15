@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -57,16 +58,52 @@ const ServiceDetails = () => {
     );
   }
 
+  // const handleUpdate=async(e)=>{
+  //   e.preventDefault();
+  //   const name = e.target.name.value;
+  //   const price = e.target.price.value;
+  //   const image = e.target.image.value;
+  //   const description = e.target.description.value;
+  //   // console.log(name,price,image,description);
+  //   const services = {name, price,image,description};
+
+
+  //   const res=await fetch("http://localhost:3000/api/services",{
+  //     method: "PATCH",
+  //     headers: {
+  //       "content-type" : "application/json",
+  //     },
+  //     body: JSON.stringify(services)
+  //   })
+
+  //   const data= await res.json();
+  //   console.log(data);
+
+  //   if(data.insertedId){
+  //     alert("Success");
+  //      e.target.reset();
+  //   }
+
+  // }
+
   return (
     <div className="p-4 md:p-8 max-w-6xl mx-auto bg-white shadow-2xl rounded-3xl mt-12 mb-12 border border-gray-100">
       <div className="flex flex-col md:flex-row gap-10">
 
         {/* Left Side: Image */}
         <div className="w-full md:w-1/2 overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/5">
-          <img
+          {/* <img
             src={service.image}
             alt={service.name}
             className="w-full h-[300px] md:h-[500px] object-cover hover:scale-105 transition-transform duration-500"
+          /> */}
+          <Image
+            width={300}
+            height={180}
+            src={service.image}
+            alt={service.name}
+            className="w-full h-[300px] md:h-[500px] object-cover hover:scale-105 transition-transform duration-500"
+            unoptimized={true}
           />
         </div>
 
@@ -99,9 +136,14 @@ const ServiceDetails = () => {
               </p>
             </div>
           </div>
+          <div className="flex justify-between gap-4">
+            <button className="text-xl font-bold hover:text-white bg-green-600 px-8 py-2 mt-2 rounded-full cursor-pointer">Update</button>
+            <button className="text-xl font-bold hover:text-white bg-red-600 px-8 py-2 mt-2 rounded-full cursor-pointer">Delete</button>
+
+          </div>
 
           <div className="mt-8 space-y-4">
-            <button className="w-full bg-blue-600 text-white py-4 rounded-xl text-xl font-bold hover:bg-blue-700 transition shadow-lg hover:shadow-blue-200 active:scale-95 duration-200">
+            <button className="w-full bg-blue-600 text-white py-2 rounded-xl text-xl font-bold hover:bg-blue-700 transition shadow-lg hover:shadow-blue-200 active:scale-95 duration-200">
               Book This Service
             </button>
             <p className="text-center text-gray-400 text-sm">

@@ -3,30 +3,37 @@
 import { FaServicestack, FaMoneyBillWave, FaImage, FaAlignLeft } from "react-icons/fa";
 
 const AddServiceForm = () => {
-  const handleAddSubmit=async(e)=>{
+  const handleAddSubmit = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const price = e.target.price.value;
     const image = e.target.image.value;
     const description = e.target.description.value;
     // console.log(name,price,image,description);
-    const services = {name, price,image,description};
+    const services = { name, price, image, description };
 
 
-    const res=await fetch("http://localhost:3000/api/services",{
+    const res = await fetch("/api/services", {
       method: "POST",
       headers: {
-        "content-type" : "application/json",
+        "content-type": "application/json",
       },
-      body: JSON.stringify(services)
-    })
+      body: JSON.stringify(services),
+    });
 
-    const data= await res.json();
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      console.error("Error adding service:", errorData);
+      alert(errorData.message || "Failed to add service");
+      return;
+    }
+
+    const data = await res.json();
     console.log(data);
 
-    if(data.insertedId){
+    if (data.insertedId) {
       alert("Success");
-       e.target.reset();
+      e.target.reset();
     }
 
   }
@@ -34,14 +41,14 @@ const AddServiceForm = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="max-w-xl w-full bg-white shadow-2xl rounded-3xl p-8">
-        
+
         <h2 className="text-3xl font-bold mb-8 text-center text-gray-800 flex items-center justify-center gap-3">
           <FaServicestack className="text-blue-600 text-2xl" />
           Add New Service
         </h2>
 
         <form onSubmit={handleAddSubmit} className="space-y-6">
-          
+
           {/* Service Name */}
           <div>
             <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
@@ -88,7 +95,7 @@ const AddServiceForm = () => {
               Description
             </label>
             <textarea
-            name="description"
+              name="description"
               rows="4"
               className="w-full mt-2 px-4 py-3 border rounded-xl focus:ring-2 focus:ring-orange-500 outline-none transition"
               placeholder="Enter service description"

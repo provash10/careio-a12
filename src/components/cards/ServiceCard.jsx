@@ -14,6 +14,7 @@ const ServiceCard = ({ service }) => {
           src={image}
           alt={name}
           className="object-cover"
+          unoptimized={true}
         />
       </div>
 

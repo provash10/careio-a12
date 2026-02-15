@@ -52,6 +52,8 @@ export async function GET(request, { params }) {
   }
 }
 
+
+//Delete
 export async function DELETE(request, { params }) {
   const { id } = await params;
 
@@ -72,7 +74,7 @@ export async function DELETE(request, { params }) {
     return Response.json({ message: "Internal Server Error" }, { status: 500 });
   }
 }
-
+//Update
 export async function PATCH(request, { params }) {
   const { id } = await params;
   const { message } = await request.json();

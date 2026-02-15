@@ -22,15 +22,15 @@ const nextConfig = {
     ],
   },
 
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: '/food-details/:id',
-  //       destination: '/foods/:id',
-  //       permanent: true,
-  //     },
-  //   ]
-  // },
+  async redirects() {
+    return [
+      {
+        source: '/service-details/:id',
+        destination: '/services/:id',
+        permanent: true,
+      },
+    ]
+  },
 };
 
 export default nextConfig;
