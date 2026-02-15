@@ -6,6 +6,8 @@ export const metadata = {
     title: "Services-Care.IO",
 }
 
+export const dynamic = 'force-dynamic';
+
 const Services = async () => {
     const servicesCollection = await connect("services");
     const services = await servicesCollection.find().toArray();

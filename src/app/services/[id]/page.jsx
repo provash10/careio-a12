@@ -20,7 +20,7 @@ const ServiceDetails = () => {
       try {
         const res = await fetch(`/api/services/${id}`);
         if (!res.ok) {
-          const errorData = await res.json();
+          const errorData = await res.json().catch(() => ({}));
           throw new Error(errorData.message || "Failed to fetch service");
         }
         const data = await res.json();
