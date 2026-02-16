@@ -43,7 +43,7 @@ const ServiceCard = ({ service }) => {
 
           <Link
             href={`/services/${_id?.toString() || ""}`}
-            className="w-full bg-blue-600 text-white py-3 rounded-xl font-black text-sm hover:bg-blue-700 transition text-center shadow-lg shadow-blue-100 active:scale-95 duration-200"
+            className="btn w-full h-[40px] rounded-xl font-black text-sm text-center shadow-lg shadow-blue-100 flex items-center justify-center"
           >
             View Details
           </Link>

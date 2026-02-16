@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaArrowLeft } from "react-icons/fa";
 
 const ServiceDetails = () => {
   const params = useParams();
@@ -104,162 +104,186 @@ const ServiceDetails = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12">
-      <div className="bg-white shadow-xl rounded-2xl md:rounded-3xl border border-gray-100 overflow-hidden">
-        <div className="flex flex-col md:flex-row">
+    <div className="min-h-screen bg-[#f8fbff]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12">
+        <div className="bg-white shadow-xl rounded-2xl md:rounded-3xl border border-gray-100 overflow-hidden">
+          <div className="flex flex-col md:flex-row">
 
-          {/* Left Side: Main Image Slider & Gallery */}
-          <div className="w-full md:w-1/2 p-4 md:p-8 space-y-6">
-            <div className="relative group rounded-2xl overflow-hidden shadow-lg bg-gray-100 aspect-[4/3] sm:aspect-video md:aspect-[4/3]">
-              <Image
-                fill
-                src={allImages[currentIdx]}
-                alt={service.name || "Service Image"}
-                className="object-cover transition-all duration-700 ease-in-out"
-                unoptimized={true}
-                priority
-              />
+            {/* Left Side: Main Image Slider & Gallery */}
+            <div className="w-full md:w-1/2 p-4 md:p-8 space-y-6">
+              <div className="relative group rounded-2xl overflow-hidden shadow-lg bg-gray-100 aspect-[4/3] sm:aspect-video md:aspect-[4/3]">
+                <Image
+                  fill
+                  src={allImages[currentIdx]}
+                  alt={service.name || "Service Image"}
+                  className="object-cover transition-all duration-700 ease-in-out"
+                  unoptimized={true}
+                  priority
+                />
 
-              {/* Slider Controls */}
+                {/* Slider Controls */}
+                {allImages.length > 1 && (
+                  <>
+                    <button
+                      onClick={handlePrev}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-md transition duration-300 md:opacity-0 md:group-hover:opacity-100 z-10"
+                      aria-label="Previous image"
+                    >
+                      <FaChevronLeft className="text-gray-800 text-xs md:text-base" />
+                    </button>
+                    <button
+                      onClick={handleNext}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-md transition duration-300 md:opacity-0 md:group-hover:opacity-100 z-10"
+                      aria-label="Next image"
+                    >
+                      <FaChevronRight className="text-gray-800 text-xs md:text-base" />
+                    </button>
+
+                    {/* Dots indicator */}
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                      {allImages.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setCurrentIdx(idx)}
+                          className={`transition-all duration-300 rounded-full ${currentIdx === idx ? 'bg-blue-600 w-5 h-1.5' : 'bg-white/60 w-1.5 h-1.5'}`}
+                          aria-label={`Go to slide ${idx + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+
               {allImages.length > 1 && (
-                <>
-                  <button
-                    onClick={handlePrev}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-md transition duration-300 md:opacity-0 md:group-hover:opacity-100 z-10"
-                    aria-label="Previous image"
-                  >
-                    <FaChevronLeft className="text-gray-800 text-xs md:text-base" />
-                  </button>
-                  <button
-                    onClick={handleNext}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-md transition duration-300 md:opacity-0 md:group-hover:opacity-100 z-10"
-                    aria-label="Next image"
-                  >
-                    <FaChevronRight className="text-gray-800 text-xs md:text-base" />
-                  </button>
-
-                  {/* Dots indicator */}
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-                    {allImages.map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setCurrentIdx(idx)}
-                        className={`transition-all duration-300 rounded-full ${currentIdx === idx ? 'bg-blue-600 w-5 h-1.5' : 'bg-white/60 w-1.5 h-1.5'}`}
-                        aria-label={`Go to slide ${idx + 1}`}
-                      />
-                    ))}
-                  </div>
-                </>
+                <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-3">
+                  {allImages.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentIdx(idx)}
+                      className={`aspect-square relative rounded-lg md:rounded-xl overflow-hidden border-2 transition-all duration-300 ${currentIdx === idx ? 'border-blue-600 ring-4 ring-blue-50 scale-95' : 'border-gray-100 hover:border-blue-200'}`}
+                    >
+                      <Image fill src={img} alt={`Thumbnail ${idx}`} className="object-cover" unoptimized />
+                    </button>
+                  ))}
+                </div>
               )}
             </div>
 
-            {allImages.length > 1 && (
-              <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-3">
-                {allImages.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentIdx(idx)}
-                    className={`aspect-square relative rounded-lg md:rounded-xl overflow-hidden border-2 transition-all duration-300 ${currentIdx === idx ? 'border-blue-600 ring-4 ring-blue-50 scale-95' : 'border-gray-100 hover:border-blue-200'}`}
-                  >
-                    <Image fill src={img} alt={`Thumbnail ${idx}`} className="object-cover" unoptimized />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Right Side: Details */}
-          <div className="w-full md:w-1/2 p-5 md:p-7 md:pl-2 flex flex-col justify-between">
-            <div className="space-y-4 md:space-y-5">
-              <div className="space-y-1.5">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className={`px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest ${service.availability === 'Available' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                    {service.availability || 'Available'}
-                  </span>
-                  <span className="text-[10px] font-bold text-gray-400 bg-gray-50 px-2 py-0.5 rounded border border-gray-100">ID: {id?.slice(-6)}</span>
+            {/* Right Side: Details */}
+            <div className="w-full md:w-1/2 p-5 md:p-7 md:pl-2 flex flex-col justify-between">
+              <div className="space-y-4 md:space-y-5">
+                <div className="space-y-1.5">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className={`px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest ${service.availability === 'Available' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                      {service.availability || 'Available'}
+                    </span>
+                    <span className="text-[10px] font-bold text-white bg-blue-900 px-2 py-0.5 rounded-full border border-blue-800 shadow-sm transition-all hover:bg-blue-800">ID: {id?.slice(-6)}</span>
+                  </div>
+                  <h1 className="text-2xl md:text-3xl font-black text-gray-900 leading-tight tracking-tight">
+                    {service.name}
+                  </h1>
                 </div>
-                <h1 className="text-2xl md:text-3xl font-black text-gray-900 leading-tight tracking-tight">
-                  {service.name}
-                </h1>
-              </div>
 
-              <div className="flex flex-col sm:flex-row gap-2">
-                <div className="flex items-center bg-blue-50/50 px-3 py-1.5 rounded-lg border border-blue-100/50">
-                  <span className="text-lg font-black text-blue-600">${service.pricePerHour}</span>
-                  <span className="text-blue-900/60 text-[11px] font-bold uppercase ml-1">/ Day</span>
-                </div>
-                <div className="flex items-center bg-orange-50/50 px-3 py-1.5 rounded-lg border border-orange-100/50">
-                  <span className="text-lg font-black text-orange-600">${service.pricePerDay || (service.pricePerHour * 8)}</span>
-                  <span className="text-orange-900/60 text-[11px] font-bold uppercase ml-1">/ Month</span>
-                </div>
-              </div>
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center h-[48px] bg-[#0a1122] px-5 rounded-2xl border border-slate-800 shadow-xl relative overflow-hidden group">
+                      <div className="absolute top-0 right-0 w-8 h-8 bg-blue-600/10 -mr-4 -mt-4 rotate-45 group-hover:bg-blue-600/20 transition-colors"></div>
+                      <span className="text-2xl font-black text-blue-400 leading-none">${service.pricePerHour}</span>
+                      <span className="text-gray-500 text-[10px] font-black uppercase ml-1.5 tracking-wider leading-none">/ Day</span>
+                    </div>
+                  </div>
 
-              <div className="space-y-2">
-                <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-                  <span className="w-1 h-5 bg-blue-600 rounded-full"></span>
-                  Service Overview
-                </h2>
-                <p className="text-gray-600 leading-relaxed text-sm md:text-[15px]">
-                  {service.description}
-                </p>
-              </div>
-
-              {service.features && service.features.length > 0 && (
-                <div className="space-y-3">
-                  <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-                    <span className="w-1 h-5 bg-orange-500 rounded-full"></span>
-                    What's Included
-                  </h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {service.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-gray-700 bg-gray-50/50 px-3 py-2 rounded-lg text-[13px] border border-gray-100/50 hover:bg-white transition-colors">
-                        <span className="text-blue-500 text-xs flex-shrink-0">●</span>
-                        <span className="font-semibold">{feature}</span>
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center h-[48px] bg-[#0a1122] px-5 rounded-2xl border border-slate-800 shadow-xl relative overflow-hidden group">
+                      <div className="absolute top-0 right-0 w-8 h-8 bg-emerald-600/10 -mr-4 -mt-4 rotate-45 group-hover:bg-emerald-600/20 transition-colors"></div>
+                      <span className="text-2xl font-black text-emerald-400 leading-none">${service.pricePerDay || (service.pricePerHour * 8)}</span>
+                      <span className="text-gray-500 text-[10px] font-black uppercase ml-1.5 tracking-wider leading-none">/ Month</span>
+                    </div>
+                    {service.discountPercentage > 0 && (
+                      <div className="btn h-[45px] px-5 rounded-xl text-xs md:text-sm font-black uppercase tracking-wider shadow-lg flex items-center justify-center cursor-default">
+                        <span className="text-white mr-2 animate-pulse text-xs">●</span>
+                        {service.discountPercentage}% OFF
                       </div>
-                    ))}
+                    )}
                   </div>
                 </div>
-              )}
-            </div>
 
-            <div className="mt-6 space-y-3 pt-4 border-t border-gray-50 md:border-t-0 md:pt-0">
-              <div className="grid grid-cols-2 gap-3">
-                <Link
-                  href={`/services/${id}/update`}
-                  className="py-2.5 rounded-lg font-bold text-sm border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white transition-all shadow-sm active:scale-95 text-center flex items-center justify-center"
-                >
-                  Update
-                </Link>
-                <button
-                  onClick={handleDelete}
-                  className="py-2.5 rounded-lg font-bold text-sm border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm active:scale-95">
-                  Delete
-                </button>
-              </div>
-              <button className="w-full bg-blue-600 text-white py-3.5 rounded-xl text-lg font-black hover:bg-blue-700 transition-all shadow-lg shadow-blue-100/50 active:scale-[0.98]">
-                Book This Service
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {service.faq && service.faq.length > 0 && (
-          <div className="border-t border-gray-100 bg-gray-50/30 p-6 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-8 text-center uppercase tracking-tight">FAQ Section</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 max-w-5xl mx-auto">
-              {service.faq.map((item, idx) => (
-                <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 transition hover:shadow-md">
-                  <h3 className="font-extrabold text-gray-800 mb-2 flex gap-2">
-                    <span className="text-blue-600">Q:</span> {item.question}
-                  </h3>
-                  <p className="text-gray-500 text-sm leading-relaxed flex gap-2">
-                    <span className="text-gray-300">A:</span> {item.answer}
+                <div className="space-y-2">
+                  <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+                    <span className="w-1 h-5 bg-blue-600 rounded-full"></span>
+                    Service Overview
+                  </h2>
+                  <p className="text-gray-600 leading-relaxed text-sm md:text-[15px]">
+                    {service.description}
                   </p>
                 </div>
-              ))}
+
+                {service.features && service.features.length > 0 && (
+                  <div className="space-y-3">
+                    <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+                      <span className="w-1 h-5 bg-orange-500 rounded-full"></span>
+                      What's Included
+                    </h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {service.features.map((feature, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-gray-700 bg-gray-50/50 px-3 py-2 rounded-lg text-[13px] border border-gray-100/50 hover:bg-white transition-colors">
+                          <span className="text-blue-500 text-xs flex-shrink-0">●</span>
+                          <span className="font-semibold">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-6 space-y-3 pt-4 border-t border-gray-50 md:border-t-0 md:pt-0">
+                <div className="grid grid-cols-2 gap-3">
+                  <Link
+                    href={`/services/${id}/update`}
+                    className="py-2.5 rounded-lg font-bold text-sm border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white transition-all shadow-sm active:scale-95 text-center flex items-center justify-center"
+                  >
+                    Update
+                  </Link>
+                  <button
+                    onClick={handleDelete}
+                    className="py-2.5 rounded-lg font-bold text-sm border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm active:scale-95">
+                    Delete
+                  </button>
+                </div>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => router.back()}
+                    className="btn bg-slate-800 !text-white hover:bg-slate-900 border-none w-[40%] h-[40px] rounded-xl text-sm font-black flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
+                  >
+                    <FaArrowLeft className="text-xs" />
+                    Back
+                  </button>
+                  <button className="btn w-[60%] h-[40px] rounded-xl text-sm font-black shadow-lg shadow-blue-100/50 flex items-center justify-center cursor-pointer">
+                    Book This Service
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        )}
+
+          {service.faq && service.faq.length > 0 && (
+            <div className="border-t border-gray-100 bg-gray-50/30 p-6 md:p-12">
+              <h2 className="text-2xl md:text-3xl font-black text-gray-900 mb-8 text-center uppercase tracking-tight">FAQ Section</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 max-w-5xl mx-auto">
+                {service.faq.map((item, idx) => (
+                  <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 transition hover:shadow-md">
+                    <h3 className="font-extrabold text-gray-800 mb-2 flex gap-2">
+                      <span className="text-blue-600">Q:</span> {item.question}
+                    </h3>
+                    <p className="text-gray-500 text-sm leading-relaxed flex gap-2">
+                      <span className="text-gray-300">A:</span> {item.answer}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

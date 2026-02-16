@@ -69,6 +69,7 @@ const UpdateServiceForm = ({ service }) => {
             description: formData.get("description"),
             pricePerHour: Number(formData.get("pricePerHour")),
             pricePerDay: Number(formData.get("pricePerDay")),
+            discountPercentage: Number(formData.get("discountPercentage")) || 0,
             image: formData.get("image"),
             rating: Number(formData.get("rating")),
             gallery: galleryInputs.map(url => url.trim()).filter(url => url),
@@ -187,14 +188,20 @@ const UpdateServiceForm = ({ service }) => {
                         ></textarea>
                     </div>
 
-                    {/* Pricing */}
-                    <div>
-                        <label className="text-sm font-bold text-gray-700 block mb-2">Price (Per Hour)</label>
-                        <input type="number" name="pricePerHour" required defaultValue={service?.pricePerHour} className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 outline-none transition" placeholder="300" />
-                    </div>
-                    <div>
-                        <label className="text-sm font-bold text-gray-700 block mb-2">Price (Per Day)</label>
-                        <input type="number" name="pricePerDay" required defaultValue={service?.pricePerDay} className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 outline-none transition" placeholder="2200" />
+                    {/* Pricing Grid */}
+                    <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label className="text-sm font-bold text-gray-700 block mb-2">Price (Per Hour)</label>
+                            <input type="number" name="pricePerHour" required defaultValue={service?.pricePerHour} className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 outline-none transition" placeholder="300" />
+                        </div>
+                        <div>
+                            <label className="text-sm font-bold text-gray-700 block mb-2">Price (Per Day)</label>
+                            <input type="number" name="pricePerDay" required defaultValue={service?.pricePerDay} className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 outline-none transition" placeholder="2200" />
+                        </div>
+                        <div>
+                            <label className="text-sm font-bold text-gray-700 block mb-2">Off / Discount (%)</label>
+                            <input type="number" name="discountPercentage" defaultValue={service?.discountPercentage} className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 outline-none transition" placeholder="20" />
+                        </div>
                     </div>
 
                     {/* Image */}

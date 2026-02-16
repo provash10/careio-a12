@@ -90,7 +90,7 @@ export async function PATCH(request, { params }) {
     const updateData = {};
     const fields = [
       "name", "shortDescription", "description", "image",
-      "availability", "gallery", "features", "faq"
+      "availability", "gallery", "features", "faq", "discountPercentage"
     ];
 
     fields.forEach(field => {
@@ -103,6 +103,7 @@ export async function PATCH(request, { params }) {
     if (body.pricePerHour !== undefined) updateData.pricePerHour = Number(body.pricePerHour);
     if (body.pricePerDay !== undefined) updateData.pricePerDay = Number(body.pricePerDay);
     if (body.rating !== undefined) updateData.rating = Number(body.rating);
+    if (body.discountPercentage !== undefined) updateData.discountPercentage = Number(body.discountPercentage);
 
     if (Object.keys(updateData).length === 0) {
       return Response.json({ message: "No fields to update" }, { status: 400 });

@@ -37,6 +37,7 @@ export async function POST(request) {
       description,
       pricePerHour,
       pricePerDay,
+      discountPercentage,
       image,
       rating,
       gallery,
@@ -58,6 +59,7 @@ export async function POST(request) {
       description,
       pricePerHour: Number(pricePerHour),
       pricePerDay: Number(pricePerDay),
+      discountPercentage: Number(discountPercentage) || 0,
       image,
       rating: Number(rating),
       gallery: Array.isArray(gallery) ? gallery : [],
@@ -71,6 +73,31 @@ export async function POST(request) {
     const result = await servicesCollection.insertOne(newService);
 
     return Response.json(result);
+  } catch (error) {
+    return Response.json({ message: "Internal Server Error" }, { status: 500 });
+  }
+}
+
+export async function PATCH(request) {
+  try {
+    const body = await request.json();
+    const { _id, ...updates } = body;
+
+    if (!_id) {
+      return Response.json({ message: "Service ID is required" }, { status: 400 });
+    }
+
+    const servicesCollection = await connect("services");
+    const result = await servicesCollection.updateOne(
+      { _id: new ObjectId(_id) },
+      { $set: updates }
+    );
+
+    if (result.matchedCount === 0) {
+      return Response.json({ message: "Service not found" }, { status: 404 });
+    }
+
+    return Response.json({ message: "Service updated successfully" });
   } catch (error) {
     return Response.json({ message: "Internal Server Error" }, { status: 500 });
   }

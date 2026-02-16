@@ -45,7 +45,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="bg-stone-900 sticky top-0 z-[100] shadow-md border-b border-white/5">
+    <nav className="bg-[#050b1a] sticky top-0 z-[100] shadow-md border-b border-white/5">
       <div className="max-w-7xl mx-auto">
         {/* Main Header Row */}
         <div className="px-5 py-3 flex justify-between items-center">
@@ -57,12 +57,12 @@ const Navbar = () => {
               width={100}
               height={50}
               priority
-              className="hover:opacity-90 transition active:scale-95 object-contain"
+              className="hover:opacity-90 transition active:scale-95 object-contain brightness-0 invert"
             />
           </Link>
 
           {/* Hamburger for small screens */}
-          <div className="md:hidden" onClick={() => setOpen(!open)}>
+          <div className="lg:hidden" onClick={() => setOpen(!open)}>
             <button className="text-white focus:outline-none p-2 rounded-lg hover:bg-white/10 transition active:bg-white/20">
               {open ? (
                 <FaTimes className="text-xl transition-all duration-300 rotate-90" />
@@ -72,8 +72,8 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* Desktop Links (Hidden on Mobile) */}
-          <div className="hidden md:flex items-center gap-2">
+          {/* Desktop Links (Hidden on LG and smaller) */}
+          <div className="hidden lg:flex items-center gap-2">
             <Link href="/" className="btn text-sm min-w-[100px] h-[38px] flex items-center justify-center">Home</Link>
             <Link href="/services" className="btn text-sm min-w-[100px] h-[38px] flex items-center justify-center">Services</Link>
             <Link href="/bookings" className="btn text-sm min-w-[100px] h-[38px] flex items-center justify-center">Bookings</Link>
@@ -87,8 +87,8 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu (Pushing content down, extremely slim, right-aligned) */}
-        <div className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${open ? 'max-h-[550px] border-t border-white/5 opacity-100' : 'max-h-0 opacity-0'}`}>
-          <div className="flex flex-col items-end gap-1.5 p-3 bg-stone-900">
+        <div className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${open ? 'max-h-[550px] border-t border-white/5 opacity-100' : 'max-h-0 opacity-0'}`}>
+          <div className="flex flex-col items-end gap-1.5 p-3 bg-[#050b1a]">
             <div className="w-full max-w-[140px] space-y-1">
               <Link href="/" onClick={() => setOpen(false)} className="btn text-center block w-full h-[40px] flex items-center justify-center text-sm">Home</Link>
               <Link href="/services" onClick={() => setOpen(false)} className="btn text-center block w-full h-[40px] flex items-center justify-center text-sm">Services</Link>
