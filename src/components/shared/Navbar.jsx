@@ -36,6 +36,7 @@
 // export default Navbar;
 
 "use client";
+import { FaBars, FaTimes } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -53,8 +54,8 @@ const Navbar = () => {
             <Image
               src="/image/careio.png"
               alt="careio"
-              width={85}
-              height={30}
+              width={100}
+              height={50}
               priority
               className="hover:opacity-90 transition active:scale-95 object-contain"
             />
@@ -63,11 +64,11 @@ const Navbar = () => {
           {/* Hamburger for small screens */}
           <div className="md:hidden" onClick={() => setOpen(!open)}>
             <button className="text-white focus:outline-none p-2 rounded-lg hover:bg-white/10 transition active:bg-white/20">
-              <div className="space-y-1.5">
-                <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${open ? 'rotate-45 translate-y-2' : ''}`}></span>
-                <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${open ? 'opacity-0' : ''}`}></span>
-                <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${open ? '-rotate-45 -translate-y-2' : ''}`}></span>
-              </div>
+              {open ? (
+                <FaTimes className="text-xl transition-all duration-300 rotate-90" />
+              ) : (
+                <FaBars className="text-xl transition-all duration-300" />
+              )}
             </button>
           </div>
 
@@ -79,7 +80,7 @@ const Navbar = () => {
             <Link href="/my-bookings" className="btn text-sm min-w-[100px] h-[38px] flex items-center justify-center">My Bookings</Link>
             <Link href="/reviews" className="btn text-sm min-w-[100px] h-[38px] flex items-center justify-center">Reviews</Link>
             <Link href="/dashboard" className="btn text-sm min-w-[100px] h-[38px] flex items-center justify-center">Dashboard</Link>
-            <Link href="/addservice" className="btn text-sm font-bold bg-orange-600 min-w-[110px] h-[38px] flex items-center justify-center">Add Service</Link>
+            <Link href="/addservice" className="btn text-sm min-w-[110px] h-[38px] flex items-center justify-center">Add Service</Link>
             <Link href="/auth/login" className="btn text-sm min-w-[80px] h-[38px] flex items-center justify-center">Login</Link>
             <Link href="/auth/register" className="btn text-sm min-w-[100px] h-[38px] flex items-center justify-center">Register</Link>
           </div>
@@ -95,7 +96,7 @@ const Navbar = () => {
               <Link href="/my-bookings" onClick={() => setOpen(false)} className="btn text-center block w-full h-[40px] flex items-center justify-center text-sm">My Bookings</Link>
               <Link href="/reviews" onClick={() => setOpen(false)} className="btn text-center block w-full h-[40px] flex items-center justify-center text-sm">Reviews</Link>
               <Link href="/dashboard" onClick={() => setOpen(false)} className="btn text-center block w-full h-[40px] flex items-center justify-center text-sm">Dashboard</Link>
-              <Link href="/addservice" onClick={() => setOpen(false)} className="btn text-center block w-full h-[40px] flex items-center justify-center text-sm font-bold bg-orange-600">Add Service</Link>
+              <Link href="/addservice" onClick={() => setOpen(false)} className="btn text-center block w-full h-[40px] flex items-center justify-center text-sm">Add Service</Link>
               <Link href="/auth/login" onClick={() => setOpen(false)} className="btn text-center block w-full h-[40px] flex items-center justify-center text-sm">Login</Link>
               <Link href="/auth/register" onClick={() => setOpen(false)} className="btn text-center block w-full h-[40px] flex items-center justify-center text-sm">Register</Link>
             </div>

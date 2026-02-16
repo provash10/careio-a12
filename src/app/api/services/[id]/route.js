@@ -76,30 +76,53 @@ export async function DELETE(request, { params }) {
 }
 //Update
 export async function PATCH(request, { params }) {
-  const { id } = await params;
-  const { message } = await request.json();
-
-  if (!id || id.length !== 24) {
-    return Response.json({ message: "Invalid ID format" }, { status: 400 });
-  }
-
-  if (!message || typeof message !== "string") {
-    return Response.json({ message: "Message is required" }, { status: 400 });
-  }
-
   try {
+    const { id } = await params;
+
+    if (!id || id.length !== 24) {
+      return Response.json({ message: "Invalid ID format" }, { status: 400 });
+    }
+
+    const body = await request.json();
     const servicesCollection = await connect("services");
+
+    // Create an update object with only provided fields
+    const updateData = {};
+    const fields = [
+      "name", "shortDescription", "description", "image",
+      "availability", "gallery", "features", "faq"
+    ];
+
+    fields.forEach(field => {
+      if (body[field] !== undefined) {
+        updateData[field] = body[field];
+      }
+    });
+
+    // Handle numeric fields separately to ensure 0 is not treated as falsy
+    if (body.pricePerHour !== undefined) updateData.pricePerHour = Number(body.pricePerHour);
+    if (body.pricePerDay !== undefined) updateData.pricePerDay = Number(body.pricePerDay);
+    if (body.rating !== undefined) updateData.rating = Number(body.rating);
+
+    if (Object.keys(updateData).length === 0) {
+      return Response.json({ message: "No fields to update" }, { status: 400 });
+    }
+
     const result = await servicesCollection.updateOne(
       { _id: new ObjectId(id) },
-      { $set: { message } }
+      { $set: updateData }
     );
 
     if (result.matchedCount === 0) {
       return Response.json({ message: "Service not found" }, { status: 404 });
     }
 
-    return Response.json({ message: "Updated successfully", result });
+    return Response.json({
+      message: "Updated successfully",
+      modifiedCount: result.modifiedCount
+    });
   } catch (error) {
+    console.error("PATCH Update Error:", error);
     return Response.json({ message: "Internal Server Error" }, { status: 500 });
   }
 }

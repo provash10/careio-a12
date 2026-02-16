@@ -1,12 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const ServiceDetails = () => {
   const params = useParams();
+  const router = useRouter();
   const { id } = params;
 
   const [service, setService] = useState(null);
@@ -83,33 +85,23 @@ const ServiceDetails = () => {
     );
   }
 
-  // const handleUpdate=async(e)=>{
-  //   e.preventDefault();
-  //   const name = e.target.name.value;
-  //   const price = e.target.price.value;
-  //   const image = e.target.image.value;
-  //   const description = e.target.description.value;
-  //   // console.log(name,price,image,description);
-  //   const services = {name, price,image,description};
+  const handleDelete = async () => {
+    if (!confirm("Are you sure you want to delete this service?")) return;
 
-
-  //   const res=await fetch("http://localhost:3000/api/services",{
-  //     method: "PATCH",
-  //     headers: {
-  //       "content-type" : "application/json",
-  //     },
-  //     body: JSON.stringify(services)
-  //   })
-
-  //   const data= await res.json();
-  //   console.log(data);
-
-  //   if(data.insertedId){
-  //     alert("Success");
-  //      e.target.reset();
-  //   }
-
-  // }
+    try {
+      const res = await fetch(`/api/services/${id}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        alert("Deleted successfully");
+        router.push("/services");
+      } else {
+        alert("Failed to delete");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12">
@@ -218,11 +210,11 @@ const ServiceDetails = () => {
                     <span className="w-1 h-5 bg-orange-500 rounded-full"></span>
                     What's Included
                   </h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {service.features.map((feature, idx) => (
                       <div key={idx} className="flex items-center gap-2 text-gray-700 bg-gray-50/50 px-3 py-2 rounded-lg text-[13px] border border-gray-100/50 hover:bg-white transition-colors">
                         <span className="text-blue-500 text-xs flex-shrink-0">●</span>
-                        <span className="font-semibold truncate">{feature}</span>
+                        <span className="font-semibold">{feature}</span>
                       </div>
                     ))}
                   </div>
@@ -232,8 +224,17 @@ const ServiceDetails = () => {
 
             <div className="mt-6 space-y-3 pt-4 border-t border-gray-50 md:border-t-0 md:pt-0">
               <div className="grid grid-cols-2 gap-3">
-                <button className="py-2.5 rounded-lg font-bold text-sm border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white transition-all shadow-sm active:scale-95">Update</button>
-                <button className="py-2.5 rounded-lg font-bold text-sm border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm active:scale-95">Delete</button>
+                <Link
+                  href={`/services/${id}/update`}
+                  className="py-2.5 rounded-lg font-bold text-sm border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white transition-all shadow-sm active:scale-95 text-center flex items-center justify-center"
+                >
+                  Update
+                </Link>
+                <button
+                  onClick={handleDelete}
+                  className="py-2.5 rounded-lg font-bold text-sm border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-all shadow-sm active:scale-95">
+                  Delete
+                </button>
               </div>
               <button className="w-full bg-blue-600 text-white py-3.5 rounded-xl text-lg font-black hover:bg-blue-700 transition-all shadow-lg shadow-blue-100/50 active:scale-[0.98]">
                 Book This Service
